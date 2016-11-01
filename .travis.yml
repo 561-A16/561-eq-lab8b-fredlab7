@@ -6,12 +6,16 @@ branches:
   only:
   - master
 
+cache:
+    directories:
+    - $PWD/packages
+
 services:
   - docker
 
-before_install:
-    - sudo apt-get -qq update
-    - sudo apt-get install sshpass
+#before_install:
+#    - sudo apt-get -qq update
+#    - sudo apt-get install sshpass
 
 script:
     - docker build -t webapp:test -f ./dockerfile/test .
