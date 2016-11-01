@@ -10,12 +10,16 @@ cache:
     directories:
     - $PWD/packages
 
+addons:
+  ssh_known_hosts:
+  - 159.203.33.172
+
 services:
   - docker
 
-#before_install:
-#    - sudo apt-get -qq update
-#    - sudo apt-get install sshpass
+before_install:
+    - sudo apt-get -qq update
+    - sudo apt-get install sshpass
 
 script:
     - docker build -t webapp:test -f ./dockerfile/test .
@@ -24,7 +28,10 @@ script:
 after_success:
     - docker build -t webapp:release -f ./dockerfile/release .
     - docker tag webapp:release fredlab7/webapp:release
-    - docker login -u=fredlab7 -p=$DOCKER_HUB_PASSWD
+    - docker login -u=$DOCKER_HUB_USERNAME -p=$DOCKER_HUB_PASSWD
     - docker push fredlab7/webapp:latest
-#    - sshpass -p $SSH_PASSWD ssh user@host
+    - sshpass -p $DIGITAL_OCEAN_PASSWD ssh u1436958@159.203.33.172
+    - sshpass -e scp -o StrictHostKeyChecking=no $PWD/scripts/removeDockerRunning.sh u1436958@159.203.33.172:/home/u1436958
+    - sshpass -e ssh u1436958@159.203.33.172 'chmod +x removeDockerRunning.sh'
+    - sshpass -e ssh u1436958@159.203.33.172 'sh removeDockerRunning.sh'
 
