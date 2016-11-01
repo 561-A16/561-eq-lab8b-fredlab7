@@ -34,4 +34,3 @@ after_success:
     - sshpass -e scp -o StrictHostKeyChecking=no $PWD/scripts/removeDockerRunning.sh u1436958@159.203.33.172:/home/u1436958
     - sshpass -e ssh u1436958@159.203.33.172 'chmod +x removeDockerRunning.sh'
     - sshpass -e ssh u1436958@159.203.33.172 'sh removeDockerRunning.sh'
-
