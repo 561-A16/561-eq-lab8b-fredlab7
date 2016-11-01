@@ -30,7 +30,7 @@ after_success:
     - docker tag webapp:release fredlab7/webapp:release
     - docker login -u=$DOCKER_HUB_USERNAME -p=$DOCKER_HUB_PASSWD
     - docker push fredlab7/webapp:latest
-    - sshpass -p $DIGITAL_OCEAN_PASSWD ssh u1436958@159.203.33.172
+    - export SSHPASS=$DIGITAL_OCEAN_PASSWD
     - sshpass -e scp -o StrictHostKeyChecking=no $PWD/scripts/removeDockerRunning.sh u1436958@159.203.33.172:/home/u1436958
     - sshpass -e ssh u1436958@159.203.33.172 'chmod +x removeDockerRunning.sh'
     - sshpass -e ssh u1436958@159.203.33.172 'sh removeDockerRunning.sh'
