@@ -17,5 +17,5 @@ script:
     - docker build -t webapp:release -f ./dockerfile/release .
     - docker tag webapp:release fredlab7/webapp:release
     - docker login -u=fredlab7 -p=$DOCKER_HUB_PASSWD
-    - docker push thuranel/webapp:release
+    - docker push fredlab7/webapp:latest
 
