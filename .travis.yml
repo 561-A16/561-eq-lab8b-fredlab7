@@ -11,7 +11,7 @@ services:
 
 before_install:
     - sudo apt-get -qq update
-    - apt-get install sshpass
+    - sudo apt-get install sshpass
 
 script:
     - docker build -t webapp:test -f ./dockerfile/test .
