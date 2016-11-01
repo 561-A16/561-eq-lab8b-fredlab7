@@ -6,13 +6,13 @@ branches:
   only:
   - master
 
-# cache:
-#     directories:
-#     - $PWD/packages
+cache:
+    directories:
+    - $PWD/packages
 
-# addons:
-#   ssh_known_hosts:
-#   - 159.203.33.172
+addons:
+  ssh_known_hosts:
+  - 159.203.33.172
 
 services:
   - docker
@@ -26,8 +26,7 @@ script:
     - docker run -it --rm -v $PWD/publish:/root/publish -v $PWD/packages:/root/.nuget/packages webapp:test
 
 after_success:
-    - docker build -t webapp:release -f ./dockerfile/release .
-    - docker tag webapp:release fredlab7/webapp:release
+    - docker build -t fredlab7/webapp:latest -f ./dockerfile/release .
     - docker login -u=$DOCKER_HUB_USERNAME -p=$DOCKER_HUB_PASSWD
     - docker push fredlab7/webapp:latest
     - export SSHPASS=$DIGITAL_OCEAN_PASSWD
